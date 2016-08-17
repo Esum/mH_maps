@@ -1,0 +1,328 @@
+#include "zcommon.acs"
+
+int map0 = 0;
+int map1 = 0;
+int map2 = 0;
+int map3 = 0;
+int map4 = 0;
+int map6 = 0;
+
+script 1 (int local0, int local1, int local2) // addr = 8, flags=0000
+{
+    int local3;
+    int goto_block;
+    switch (goto_block) {
+    case 0:
+        Floor_LowerInstant(local0, 0, 16);
+        ThingSound(local1, "GlassShatter", 127);
+        Delay(const: 1);
+        local3 = 20;
+        goto_block = 2; restart;
+
+    case 2:
+        if (!(local3 > 0)) {
+            Terminate;
+        }
+        local3--;
+        Thing_ProjectileGravity(local1, Random(54, 63), Random(0, 255), Random(10, 40), Random(5, 20));
+        Thing_ProjectileGravity(local2, Random(54, 63), Random(0, 255), Random(10, 40), Random(5, 20));
+        goto_block = 2; restart;
+
+    }
+}
+script 2 (void) // addr = 332, flags=0000
+{
+    if ((map0 == 0)) {
+        Polyobj_RotateRight(const: 4, 8, 64);
+        map0 = 1;
+    }
+    Terminate;
+
+}
+script 3 (void) // addr = 400, flags=0000
+{
+    int local0;
+    int goto_block;
+    switch (goto_block) {
+    case 0:
+        Polyobj_OR_RotateRight(const: 6, 24, 128);
+        Delay(const: 40);
+        goto_block = 2; restart;
+
+    case 2:
+        if (!(local0 < 18)) {
+            Polyobj_OR_RotateRight(const: 6, 24, 128);
+            Terminate;
+        }
+        SetLineTexture(1, 0, 1, "SPAWN09");
+        Delay(const: 2);
+        SetLineTexture(1, 0, 1, "SPAWN10");
+        Thing_ProjectileGravity(1, 10, Random(32, 96), Random(160, 208), 0);
+        ThingSound(1, "FireDemonAttack", 127);
+        Delay(const: 2);
+        SetLineTexture(1, 0, 1, "SPAWN08");
+        Delay(Random(2, 8));
+        local0++;
+        goto_block = 2; restart;
+
+    }
+}
+script 4 (void) // addr = 744, flags=0000
+{
+    int local0;
+    int goto_block;
+    switch (goto_block) {
+    case 0:
+        Delay(const: 8);
+        goto_block = 2; restart;
+
+    case 2:
+        if (!(local0 < 8)) {
+            Terminate;
+        }
+        Polyobj_OR_Move((local0 + 8), 16, 192, 64);
+        Delay(const: 32);
+        local0 += 2;
+        goto_block = 2; restart;
+
+    }
+}
+script 5 (void) // addr = 868, flags=0000
+{
+    if ((GameType() == 2)) {
+        Door_Open(const: 90, 16);
+    }
+    Terminate;
+
+}
+script 6 (void) // addr = 912, flags=0000
+{
+    int local0;
+    int goto_block;
+    switch (goto_block) {
+    case 0:
+        Delay(const: 8);
+        goto_block = 2; restart;
+
+    case 2:
+        if (!(local0 < 8)) {
+            Door_Open(const: 34, 8);
+            Terminate;
+        }
+        Polyobj_OR_Move((local0 + 8), 16, 192, 64);
+        Delay(const: 32);
+        local0 += 2;
+        goto_block = 2; restart;
+
+    }
+}
+script 7 (void) // addr = 1052, flags=0000
+{
+    if ((map6 < 4)) {
+        Floor_MoveToValueTimes8(const: 30, 64, 2, 0);
+        Delay(const: 256);
+        Floor_RaiseAndCrush(const: 30, 32, 100);
+        map6++;
+    }
+    Terminate;
+
+}
+script 8 (void) // addr = 1144, flags=0000
+{
+    if ((map1 == 0)) {
+        Print(s:"THE DOOR IS LOCKED");
+    }
+    Terminate;
+
+}
+script 9 (void) // addr = 1196, flags=0000
+{
+    Door_Open(const: 18, 16);
+    map1 = 1;
+    Terminate;
+
+}
+script 10 (void) // addr = 1232, flags=0000
+{
+    Door_Open(const: 14, 16);
+    map2 = 1;
+    Terminate;
+
+}
+script 11 (void) // addr = 1268, flags=0000
+{
+    if ((map2 == 0)) {
+        Print(s:"THE DOOR IS LOCKED");
+    }
+    Terminate;
+
+}
+script 12 (void) // addr = 1320, flags=0000
+{
+    int local0, local1;
+    int goto_block;
+    switch (goto_block) {
+    case 0:
+        map3 = 1;
+        goto_block = 2; restart;
+
+    case 2:
+        if (!(local1 < 20)) {
+            Terminate;
+        }
+        goto_block = 3; restart;
+
+    case 3:
+        if ((local0 < 4)) {
+            Pillar_BuildAndCrush((40 + local0), Random(const: 8, 32), 0, 20);
+            TagWait((40 + local0));
+            Pillar_Open((40 + local0), Random(const: 8, 32), 0, 0);
+            local0++;
+            goto_block = 3; restart;
+        } else {
+            local0 = 0;
+            local1++;
+            goto_block = 2; restart;
+        }
+
+    }
+}
+script 13 (void) // addr = 1580, flags=0000
+{
+    if ((map3 == 1)) {
+        Thing_Remove(const: 32);
+    }
+    Terminate;
+
+}
+script 14 (void) // addr = 1624, flags=0000
+{
+    if ((map4 == 0)) {
+        Thing_Spawn(const: 33, 5, 0);
+        Thing_Spawn(const: 34, 4, 128);
+        SetLineTexture(2, 0, 1, "BLANK");
+        SetLineTexture(2, 1, 1, "BLANK");
+        SetLineBlocking(2, 0);
+        map4 = 1;
+    }
+    Terminate;
+
+}
+script 15 (void) // addr = 1804, flags=0000
+{
+    int local0, local1;
+    int goto_block;
+    switch (goto_block) {
+    case 0:
+        if (!(local1 < 20)) {
+            Terminate;
+        }
+        goto_block = 2; restart;
+
+    case 2:
+        if ((local0 < 8)) {
+            Polyobj_OR_Move((8 + local0), 16, 64, 64);
+            Delay(const: 32);
+            local0 += 2;
+            goto_block = 2; restart;
+        } else {
+            local0 = 0;
+            goto_block = 3; restart;
+        }
+
+    case 3:
+        if ((local0 < 8)) {
+            Polyobj_OR_Move((8 + local0), 16, 192, 64);
+            Delay(const: 32);
+            local0 += 2;
+            goto_block = 3; restart;
+        } else {
+            local0 = 0;
+            local1++;
+            goto_block = 0; restart;
+        }
+
+    }
+}
+script 16 (void) // addr = 2108, flags=0000
+{
+    int local0;
+    int goto_block;
+    switch (goto_block) {
+    case 0:
+        Delay(const: 64);
+        goto_block = 2; restart;
+
+    case 2:
+        if (!(local0 < 3)) {
+            Terminate;
+        }
+        Floor_LowerByValue((36 + local0), 32, 184);
+        Delay(const: 64);
+        local0++;
+        goto_block = 2; restart;
+
+    }
+}
+script 253 OPEN // addr = 2216, flags=0000
+{
+    Delay((Random(3, 7) * 100));
+    ThingSound(36, "Ambient6", 100);
+    restart;
+
+}
+script 254 OPEN // addr = 2288, flags=0000
+{
+    int local0;
+    int goto_block;
+    switch (goto_block) {
+    case 0:
+        Delay((Random(3, 7) * 100));
+        local0 = Random(1, 5);
+        switch (local0) {
+            case 5:
+                AmbientSound("Ambient12", Random(const: 50, 80));
+                goto_block = 2; restart;
+            case 4:
+                AmbientSound("Ambient10", Random(const: 50, 80));
+                goto_block = 2; restart;
+            case 3:
+                AmbientSound("Ambient1", Random(const: 50, 80));
+                goto_block = 2; restart;
+            case 2:
+                AmbientSound("Ambient10", Random(const: 50, 80));
+                goto_block = 2; restart;
+            case 1:
+                AmbientSound("Ambient1", Random(const: 50, 80));
+                goto_block = 2; restart;
+        }
+        goto_block = 2; restart;
+
+    case 2:
+        goto_block = 0; restart;
+
+    }
+}
+script 255 OPEN // addr = 2608, flags=0000
+{
+    int local0;
+    Delay(const: 8400);
+    local0 = Random(const: 0, 1);
+    if ((local0 == 1)) {
+        Thing_Spawn(255, 4, 128);
+    }
+    local0 = Random(const: 0, 1);
+    if ((local0 == 1)) {
+        Thing_Spawn(254, 4, 196);
+    }
+    local0 = Random(const: 0, 1);
+    if ((local0 == 1)) {
+        Thing_Spawn(253, 4, 196);
+    }
+    local0 = Random(const: 0, 1);
+    if ((local0 == 1)) {
+        Thing_Spawn(252, 4, 0);
+    }
+    restart;
+
+}
